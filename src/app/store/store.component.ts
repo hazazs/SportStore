@@ -41,18 +41,23 @@ export class StoreComponent {
         this.changePage(1);
     }
 
-    //get pageNumbers(): number[] {
-    //    return Array(Math.ceil(this.repository
-    //        .getProducts(this.selectedCategory).length / this.productsPerPage))
-    //           .fill(0).map((x, i) => i + 1);
-    //}
-
     get pageCount(): number {
         return Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.productsPerPage);
     }
 
     addProductToCart(product: Product) {
-        this.cart.addLine(product);
+        this.cart.addLine(product, product.quantity.value);
+    }
+
+    validateInput(product: Product, event: any) {
+        let input = event.target.value;
+
+        if (/^[1-9][0-9]*$/.test(input)) {
+            product.quantity.valid = true;
+            product.quantity.value = Number(input);
+        } else {
+            product.quantity.valid = false;
+        }
     }
 
 }
