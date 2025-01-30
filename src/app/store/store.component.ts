@@ -46,18 +46,15 @@ export class StoreComponent {
     }
 
     addProductToCart(product: Product) {
-        this.cart.addLine(product, product.quantity.value);
+        this.cart.addLine(product, Number(product.quantity.value));
     }
 
     validateInput(product: Product, event: any) {
         let input = event.target.value;
 
-        if (/^[1-9][0-9]*$/.test(input)) {
-            product.quantity.valid = true;
-            product.quantity.value = Number(input);
-        } else {
-            product.quantity.valid = false;
-        }
+        product.quantity.valid = /^[1-9][0-9]*$/.test(input);
+        product.quantity.value = input;
+
     }
 
 }
